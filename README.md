@@ -7,6 +7,18 @@ approval, and remembers things about each customer across conversations.
 
 Everything in this project is **free** - no paid APIs, no credit card.
 
+### Chat Interface
+
+![UI](assets/ui.png)
+
+### Sidebar & Customer Context
+
+![Sidebar](assets/ui1.png)
+
+### Example Conversation
+
+![Conversation](assets/conversation.png)
+
 ## What it can do
 
 - **Answer FAQs** about shipping, refunds, and returns using RAG over a small
@@ -20,10 +32,12 @@ Everything in this project is **free** - no paid APIs, no credit card.
   previously had a delayed delivery complaint
 - **Resume conversations** after a restart, because every step is checkpointed
 
-## Why this is a good project to showcase
 
-It deliberately covers every major LangGraph/agentic concept in one (still
-fairly small) codebase:
+## LangGraph Workflow
+
+![Workflow](assets/workflow.png)
+
+---
 
 | Concept | Where it lives |
 |---|---|
@@ -162,46 +176,32 @@ Pick a user from the sidebar and try these:
 > thread - it picks up exactly where it left off, thanks to the SQLite
 > checkpointer.
 
-## A few honest design notes
 
-- **Tools are called deterministically by the graph nodes, not by the LLM.**
-  The nodes already know exactly which tool is needed at each step (e.g. "we
-  have an order ID, look it up"), so there's no need for the LLM to decide
-  *whether* to call a tool - only to write the final reply. This is more
-  reliable than LLM-driven function-calling, especially with smaller free
-  models, while the tools themselves are still real LangChain `@tool`
-  functions you can point to.
-- **"Streaming" in the UI is node-by-node progress plus a simulated
-  word-by-word reveal of the finished answer**, not raw token streaming from
-  Groq. It looks and feels real-time and is simple to reason about - a
-  natural next step would be to stream actual tokens from the LLM call inside
-  the FAQ/refund nodes.
-- **The refund eligibility logic is intentionally simple** (delivered status +
-  7-day window + a flat amount threshold) so it's easy to explain and extend.
+##  A Few Honest Design Notes
 
-## Explaining it in an interview
+>**Hardcoded Routing > LLM Function Calling:** The graph nodes inherently know which tool to use at what stage (e.g., "Got the Order ID? Look it up"). Bypassing the LLM for tool selection drastically improves reliability, especially with free-tier models. Don't worry, the tools themselves are still standard LangChain `@tool` functions!
 
-> "I built an AI customer support agent using LangGraph that handles order
-> tracking, refund requests, FAQ answering, and human escalation for an
-> e-commerce platform. It uses four different workflow patterns: a linear
-> flow for FAQ/RAG and order lookups, a conditional flow for intent routing
-> and refund eligibility, an iterative flow that collects missing refund
-> details over multiple turns, and a parallel flow that fetches order
-> details, policy context, and customer history at the same time during
-> refund evaluation. High-value refunds pause for human-in-the-loop approval
-> using LangGraph's `interrupt_before`, and every step is checkpointed to
-> SQLite so conversations survive a restart. The agent also has both
-> short-term memory (the current conversation) and long-term memory
-> (facts about the customer saved to SQLite and loaded at the start of every
-> turn). Everything runs on free tools - Groq for the LLM, local HuggingFace
-> embeddings with FAISS for RAG, and SQLite for persistence."
+> **Simulated, Not Raw Streaming:** To keep the logic simple and easy to reason about, the UI mimics streaming. It shows graph progress step-by-step and reveals the final answer word-by-word. Implementing raw token streaming directly from Groq would be a great future enhancement.
 
-## Adding more later
+> **Keep-It-Simple Refund Logic:** The refund rules (delivered + under 7 days + flat amount threshold) are kept basic on purpose. The goal here is to demonstrate the complex workflow routing, making the logic incredibly easy to explain to recruiters or expand upon later.
 
-A few natural extensions if you want to keep building:
+---
 
-- Swap the simulated UI streaming for real token-level streaming from Groq
+## Future Improvements
+
+
+- Better UI uning HTML, CSS , JS or React
 - Add an admin dashboard view of all open tickets
 - Let the refund eligibility logic consider product category (e.g. final-sale items)
-- Add a second LLM call that lets the agent ask a clarifying question when
-  intent classification is ambiguous, instead of falling back to "unclear"
+- Hybrid Search (BM25 + FAISS)
+- RAGAS (Evaluation Framework)
+
+---
+## Author
+
+**Manish Mahara**
+
+B.Tech CSE (AI/ML & Robotics)  
+DIT University
+
+GitHub: https://github.com/manishmahara23
