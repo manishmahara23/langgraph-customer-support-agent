@@ -1,0 +1,20 @@
+# Agent orchestration
+langgraph>=1.2.0
+langgraph-checkpoint-sqlite>=3.1.0
+
+# LangChain pieces actually used (kept minimal on purpose)
+langchain-core>=1.4.0
+langchain-community>=0.4.0
+langchain-text-splitters>=1.1.0
+langchain-groq>=1.1.0
+langchain-huggingface>=1.2.0
+
+# RAG: local embeddings + vector store, both free and run on your machine
+sentence-transformers>=3.0.0
+faiss-cpu>=1.8.0
+
+# UI
+streamlit>=1.50.0
+
+# .env file support
+python-dotenv>=1.0.0
