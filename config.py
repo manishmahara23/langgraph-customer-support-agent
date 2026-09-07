@@ -18,7 +18,7 @@ KNOWLEDGE_BASE_DIR = BASE_DIR / "knowledge_base"
 
 # ---- LLM (Groq is free - https://console.groq.com) ----
 GROQ_API_KEY = os.getenv("GROQ_API_KEY", "")
-GROQ_MODEL = os.getenv("GROQ_MODEL") or "llama-3.3-70b-versatile"
+GROQ_MODEL = os.getenv("GROQ_MODEL") or "openai/gpt-oss-20b"
 
 # ---- embeddings used for RAG, runs locally, no API key needed ----
 EMBEDDING_MODEL_NAME = os.getenv("EMBEDDING_MODEL_NAME") or "sentence-transformers/all-MiniLM-L6-v2"
