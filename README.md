@@ -7,6 +7,11 @@ approval, and remembers things about each customer across conversations.
 
 Everything in this project is **free** - no paid APIs, no credit card.
 
+### Architecture
+
+![Architecture](assets/architecture.png)
+
+
 ### Chat Interface
 
 ![UI](assets/ui.png)
@@ -57,7 +62,7 @@ Everything in this project is **free** - no paid APIs, no credit card.
 
 | Piece | Tool | Why |
 |---|---|---|
-| LLM | **Groq** (Llama 3.3 70B) | Free API, very fast |
+| LLM | **Groq** `openai/gpt-oss-20b` | Free API, very fast |
 | Embeddings | **HuggingFace** `sentence-transformers` | Runs locally, no API key |
 | Vector store | **FAISS** | Local file, no server |
 | Database | **SQLite** | Built into Python |
